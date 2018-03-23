@@ -49,7 +49,7 @@ var middleware = require('botkit-middleware-watson')({
   middleware.after = function(message, conversationResponse, callback) {
     callback(null, conversationResponse);
   }
-};
+}
 
 var Botkit = require('botkit');
 var debug = require('debug')('botkit:main');
