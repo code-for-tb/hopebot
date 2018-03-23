@@ -40,16 +40,16 @@ var middleware = require('botkit-middleware-watson')({
   url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
   version_date: '2017-05-26'
 });
-
+module.exports = function(app) {
 // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     callback(null, conversationPayload);
-  }
+  };
 
   middleware.after = function(message, conversationResponse, callback) {
     callback(null, conversationResponse);
   }
-}
+};
 
 var Botkit = require('botkit');
 var debug = require('debug')('botkit:main');
