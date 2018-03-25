@@ -21,7 +21,8 @@ var controller = Botkit.facebookbot({
     access_token: process.env.FACEBOOK_PAGE_TOKEN,
     verify_token: process.env.FACEBOOK_VERIFY_TOKEN,
     app_secret: process.env.FACEBOOK_APP_SECRET,
-    validate_requests: true
+    validate_requests: true,
+    require_appsecret_proof: true
 });
 
 var bot = controller.spawn({

@@ -18,13 +18,13 @@ module.exports = function () {
                             if (clientType == 'facebook') {
                                 customFacebookMessage = true;
                             }
-                        }
+                    }
                         if (message.watsonData.output.context.action) {
                             actionToBeInvoked = true;
-                        }
+                    }
                     }
                 }
-            }
+        }
             if (actionToBeInvoked == true) {
                 bot.reply(message, message.watsonData.output.text.join('\n'));
                 invokeAction(message.watsonData.output, bot, message);
@@ -36,23 +36,7 @@ module.exports = function () {
                     else {
                         bot.reply(message, message.watsonData.output.text[0]);
                     }
-                }
+            }
             }
         }
-    }
-}
-
-function invokeAction(watsonDataOutput, bot, message) {
-    let actionName = watsonDataOutput.context.action.name;
-
-
-        case 'get-time':
-            let answer = "It's " + new Date().getHours() + " o'clock and "
-                + new Date().getMinutes() + " minutes";
-            bot.reply(message, answer);
-            break;
-
-        default:
-            bot.reply(message, "Sorry, I cannot execute what you've asked me to do");
-    }
 }
