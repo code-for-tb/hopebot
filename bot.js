@@ -27,10 +27,7 @@ var controller = Botkit.facebookbot({
 var bot = controller.spawn({
 });
 
-controller.setupWebserver(process.env.port || 3000, function(err, webserver) {
-    controller.createWebhookEndpoints(webserver, bot, function() {
-    });
-});
+var webserver = require('./server.js')(controller);
 
 controller.api.messenger_profile.greeting('Hi, I\'m Hope! I\'m a bot working for Metropolitan Ministries');
 controller.api.messenger_profile.get_started('Hi, I\'m Hope! I\'m a bot working for Metropolitan Ministries');
