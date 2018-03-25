@@ -6,13 +6,13 @@
 
 var Botkit = require('botkit');
 require('dotenv').load();
-var sharedCode = require('./handleWatsonResponse.js')();
+
 
 var middleware = require('botkit-middleware-watson')({
     username: process.env.CONVERSATION_USERNAME,
     password: process.env.CONVERSATION_PASSWORD,
     workspace_id: process.env.WORKSPACE_ID,
-    version_date: '2016-09-20'
+    version_date: '2017-05-26'
 });
 var controller = Botkit.facebookbot({
     debug: true,
@@ -27,18 +27,39 @@ var controller = Botkit.facebookbot({
 var bot = controller.spawn({
 });
 
-var webserver = require('./server.js')(controller);
 
-controller.api.messenger_profile.greeting('Hi, I\'m Hope! I\'m a bot working for Metropolitan Ministries');
-controller.api.messenger_profile.get_started('Hi, I\'m Hope! I\'m a bot working for Metropolitan Ministries');
+
+controller.api.messenger_profile.greeting('Hi, I am Hope!');
+controller.api.messenger_profile.get_started('Hi, I am Hope!');
+
+module.exports = function(app) {
+    Facebook.controller.middleware.receive.use(middleware.receive);
+    Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
+    console.log('Facebook bot is live');
+    // Customize your Watson Middleware object's before and after callbacks.
+    middleware.before = function(message, conversationPayload, callback) {
+    callback(null, conversationPayload);
+  }
+
+    middleware.after = function(message, conversationResponse, callback) {
+    callback(null, conversationResponse);
+  }
+}
 
 controller.on('message_received', function (bot, message) {
     middleware.interpret(bot, message, function (err) {
-        if (!err) {
-            sharedCode.handleWatsonResponse(bot, message, 'facebook');
-        }
-        else {            
+        if (message.watsonError) {
+            console.log(message.watsonError);
+            bot.reply(message, message.watsonError.description || message.watsonError.error);
+        } else if (message.watsonData && 'output' in message.watsonData) {
+            bot.reply(message, message.watsonData.output.text.join('\n'));
+        } else {
+            console.log('Error: received message in unknown format. (Is your connection with Watson Conversation up and running?)');
             bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
         }
     });
 });
+
+
+
+var webserver = require('./server.js')(controller);
