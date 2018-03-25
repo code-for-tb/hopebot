@@ -1,6 +1,6 @@
 {
-  "name": "Hope",
-  "version": "0.0.2",
+  "name": "HopeBot",
+  "version": "0.0.3",
   "description": "Hope, a botkit helper bot for Metropolitan Ministries",
   "main": "bot.js",
   "scripts": {
@@ -10,10 +10,9 @@
     "body-parser": "^1.15.2",
     "botkit": "^0.6.12",
     "botkit-middleware-watson": "^1.7.1",
-    "botkit-studio-metrics": "^0.0.1",
     "debug": "^2.6.0",
+    "dotenv": "^5.0.1",
     "express": "^4.14.0",
-    "node-env-file": "^0.1.8",
     "request": "^2.79.0",
     "wordfilter": "^0.2.6"
   },
@@ -33,5 +32,5 @@
     "Messenger"
   ],
   "author": "miklb@miklb.com",
-  "license": "MIT"
+  "license": "Apache-2.0"
 }
