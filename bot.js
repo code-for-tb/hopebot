@@ -30,64 +30,10 @@ var controller = Botkit.facebookbot({
 var bot = controller.spawn({
 });
 
+// Set up Facebook "thread settings" such as get started button, persistent menu
+require(__dirname + '/components/thread_settings.js')(controller);
+require(__dirname + '/components/subscribe_events.js')(controller);
 
-
-controller.api.messenger_profile.greeting('Hi, I am Hope!');
-controller.api.messenger_profile.get_started('Hi, I am Hope!');
-
-controller.api.thread_settings.menu([
-    { "locale": "default",
-      "compose_input_disabled": false,
-      "call_to_actions": [
-        {
-       "title":"My Account",
-       "type":"nested",
-       "call_to_actions":[
-         {
-           "title":"Pay Bill",
-           "type":"postback",
-           "payload":"PAYBILL_PAYLOAD"
-         },
-         {
-           "title":"History",
-           "type":"postback",
-           "payload":"HISTORY_PAYLOAD"
-         },
-         {
-           "title":"Contact Info",
-           "type":"postback",
-           "payload":"CONTACT_INFO_PAYLOAD"
-         }
-       ]
-     },
-     {
-         "type":"postback",
-         "title":"Help",
-         "payload":"help"
-     },
-     {
-       "type":"web_url",
-       "title":"Botkit Docs",
-       "url":"https://github.com/howdyai/botkit/blob/master/readme-facebook.md"
-     }
-   ]
-     }
-
- ]);
-
-module.exports = function(app) {
-    Facebook.controller.middleware.receive.use(middleware.receive);
-    Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
-    console.log('Facebook bot is live');
-    // Customize your Watson Middleware object's before and after callbacks.
-    middleware.before = function(message, conversationPayload, callback) {
-    callback(null, conversationPayload);
-  }
-
-    middleware.after = function(message, conversationResponse, callback) {
-    callback(null, conversationResponse);
-  }
-}
 
 controller.on('message_received', function (bot, message) {
     middleware.interpret(bot, message, function (err) {
