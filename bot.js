@@ -27,6 +27,9 @@ var controller = Botkit.facebookbot({
     require_appsecret_proof: true
 });
 
+    controller.middleware.receive.use(middleware.receive);
+
+
 var bot = controller.spawn({
 });
 
@@ -48,6 +51,20 @@ controller.on('message_received', function (bot, message) {
         }
     });
 });
+
+controller.on('facebook_postback', function(bot, message) {
+    middleware.interpret(bot, message, function (err) {
+        if (message.watsonError) {
+            console.log(message.watsonError);
+            bot.reply(message, message.watsonError.description || message.watsonError.error);
+        } else if (message.watsonData && 'output' in message.watsonData) {
+            bot.reply(message, message.watsonData.output.text.join('\n'));
+        } else {
+            console.log('Error: received message in unknown format. (Is your connection with Watson Conversation up and running?)');
+            bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
+        }
+    });
+  });
 
 
 

@@ -18,7 +18,7 @@ module.exports = function(controller) {
                 {
                     "type":"postback",
                     "title":"Hello",
-                    "payload":"hello"
+                    "payload":"General_Greetings"
                 },
                 {
                     "type":"postback",
