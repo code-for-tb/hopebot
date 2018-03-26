@@ -5,15 +5,18 @@
 // you may not use this file except in compliance with the License.
 
 var Botkit = require('botkit');
+// load our .env file
 require('dotenv').load();
 
-
+// initial Watson as middleware
 var middleware = require('botkit-middleware-watson')({
     username: process.env.CONVERSATION_USERNAME,
     password: process.env.CONVERSATION_PASSWORD,
     workspace_id: process.env.WORKSPACE_ID,
     version_date: '2017-05-26'
 });
+
+// make our FB Messenger app connection
 var controller = Botkit.facebookbot({
     debug: true,
     log: true,
@@ -31,6 +34,46 @@ var bot = controller.spawn({
 
 controller.api.messenger_profile.greeting('Hi, I am Hope!');
 controller.api.messenger_profile.get_started('Hi, I am Hope!');
+
+controller.api.thread_settings.menu([
+    { "locale": "default",
+      "compose_input_disabled": false,
+      "call_to_actions": [
+        {
+       "title":"My Account",
+       "type":"nested",
+       "call_to_actions":[
+         {
+           "title":"Pay Bill",
+           "type":"postback",
+           "payload":"PAYBILL_PAYLOAD"
+         },
+         {
+           "title":"History",
+           "type":"postback",
+           "payload":"HISTORY_PAYLOAD"
+         },
+         {
+           "title":"Contact Info",
+           "type":"postback",
+           "payload":"CONTACT_INFO_PAYLOAD"
+         }
+       ]
+     },
+     {
+         "type":"postback",
+         "title":"Help",
+         "payload":"help"
+     },
+     {
+       "type":"web_url",
+       "title":"Botkit Docs",
+       "url":"https://github.com/howdyai/botkit/blob/master/readme-facebook.md"
+     }
+   ]
+     }
+
+ ]);
 
 module.exports = function(app) {
     Facebook.controller.middleware.receive.use(middleware.receive);
