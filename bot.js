@@ -5,15 +5,18 @@
 // you may not use this file except in compliance with the License.
 
 var Botkit = require('botkit');
+// load our .env file
 require('dotenv').load();
 
-
+// initial Watson as middleware
 var middleware = require('botkit-middleware-watson')({
     username: process.env.CONVERSATION_USERNAME,
     password: process.env.CONVERSATION_PASSWORD,
     workspace_id: process.env.WORKSPACE_ID,
     version_date: '2017-05-26'
 });
+
+// make our FB Messenger app connection
 var controller = Botkit.facebookbot({
     debug: true,
     log: true,
@@ -27,24 +30,10 @@ var controller = Botkit.facebookbot({
 var bot = controller.spawn({
 });
 
+// Set up Facebook "thread settings" such as get started button, persistent menu
+require(__dirname + '/components/thread_settings.js')(controller);
+require(__dirname + '/components/subscribe_events.js')(controller);
 
-
-controller.api.messenger_profile.greeting('Hi, I am Hope!');
-controller.api.messenger_profile.get_started('Hi, I am Hope!');
-
-module.exports = function(app) {
-    Facebook.controller.middleware.receive.use(middleware.receive);
-    Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
-    console.log('Facebook bot is live');
-    // Customize your Watson Middleware object's before and after callbacks.
-    middleware.before = function(message, conversationPayload, callback) {
-    callback(null, conversationPayload);
-  }
-
-    middleware.after = function(message, conversationResponse, callback) {
-    callback(null, conversationResponse);
-  }
-}
 
 controller.on('message_received', function (bot, message) {
     middleware.interpret(bot, message, function (err) {
