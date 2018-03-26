@@ -2,6 +2,11 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var querystring = require('querystring');
+var debug = require('debug')('botkit:webserver');
+var http = require('http');
+var fs = require('fs');
+var hbs = require('express-hbs');
 
 module.exports = function(controller) {
 
@@ -22,7 +27,9 @@ module.exports = function(controller) {
     // Register our Facebook webhook routes
     // Pass in the express server, and the botkit controller into
     // the routes file to extend both of them 
-    require('./incoming-webhook')(webserver, controller)
+    require(__dirname + '/components/routes/incoming-webhook')(webserver, controller);
+    require(__dirname + '/components/routes/embed')(webserver, controller);
+   
     
     controller.webserver = webserver;
 
