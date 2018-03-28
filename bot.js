@@ -5,6 +5,7 @@
 // you may not use this file except in compliance with the License.
 
 var Botkit = require('botkit');
+var debug = require('debug')('botkit:main');
 // load our .env file
 require('dotenv').load();
 
