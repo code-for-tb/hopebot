@@ -8,7 +8,7 @@ module.exports = function(controller) {
 
     controller.api.messenger_profile.greeting('Hi, I\'m Hope! I\'m a bot working for Metropolitan Ministries');
 
-    controller.api.messenger_profile.get_started('Hi, I\'m Hope! I\'m a bot working for Metropolitan Ministries. What would you like to chat about?');
+    controller.api.messenger_profile.get_started('General_Greetings');
 
     controller.api.messenger_profile.menu([
         {
@@ -23,7 +23,7 @@ module.exports = function(controller) {
                 {
                     "type":"postback",
                     "title":"Help",
-                    "payload":"help"
+                    "payload":"Help_general"
                 },
                 {
                     type: "web_url",
