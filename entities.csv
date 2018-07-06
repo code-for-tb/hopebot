@@ -1,0 +1,31 @@
+assistance_type,tax help,taxes
+assistance_type,utilities,bill,bills,TECO,electric
+assistance_type,rent,lease
+assistance_type,state benefits,food stamps,ACCESS Florida
+clothing,clothes,shirts,pants,suits,children's clothes,uniforms,school clothes
+clothing,shoes,sneakers,dress shoes
+day,Friday
+day,Weekend,Saturday,Sunday
+day,Thursday
+day,Wednesday
+day,Tuesday
+day,Monday
+donation_item_or_money,furniture,mattress,couch,shelf,table,chair
+donation_item_or_money,money,one time,cash,monthly,monetary,online donation
+donation_item_or_money,needed_item,canned,cereal,food,formula,diapers
+donation_item_or_money,clothing,clothes
+education,GED,General Education Development,General Education Diploma,high school diploma,GED exam
+housing,homeless,unhomed,displaced
+housing,short-term housing,Hope Hall,temporary housing,transitional housing
+housing,men's housing,male,guy,boyfriend
+housing,permanent housing,supportive housing,low income housing
+housing,long-term housing,Uplift Hall,low income housing
+housing,immediate housing,shelter,hotel,motel,hotel voucher,homeless,abused,emergency housing
+housing,at risk
+legal_services,lawyer,attorney,counsel,legal adviser,legal services,legal aid
+legal_services,Project H.E.L.P.,Project HELP,Homeless Experience Legal Protection
+location,Hillsborough,Tampa,Hillsobourgh,Hills,Hillsboro,Hillsborogh
+location,Pasco,Holiday
+volunteer,group
+volunteer,individual,just me,on my own,alone,individually
+volunteer,jobs
